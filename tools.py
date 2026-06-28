@@ -8,14 +8,19 @@ from langchain_core.tools import tool
 
 load_dotenv()
 
+tavily_key = os.getenv("TAVILY_API_KEY", "")
 
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-
+# Only initialize if the key is present to prevent hard startup crashes
+if tavily_key:
+    tavily = TavilyClient(api_key=tavily_key)
+else:
+    tavily = None
 
 @tool
 def web_search(query: str) -> str:
-    """Performs a web search using the Tavily API. Use this tool when you need to find recent news, articles, links, 
-    or general information from the internet"""
+    """Find recent, reliable and detailed information about a topic."""
+    if not tavily:
+        return "Error: TAVILY_API_KEY is missing from the server environment variables. Please check your Space secrets."
     try: 
         response = tavily.search(query=query, num_results=5)
         result = response.get("results", [])

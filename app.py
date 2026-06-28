@@ -321,11 +321,11 @@ def _render_search_log() -> None:
 spacer, toggle_col = st.columns([10, 1])
 with spacer:
     st.html('<div class="topbar"><div class="topbar-brand">RM · ResearchMind</div></div>')
-with toggle_col:
-    toggle_label = "☾ Dark" if st.session_state.theme == "light" else "☀ Light"
-    if st.button(toggle_label, key="theme_toggle_btn", help="Switch theme"):
-        _toggle_theme()
-        st.rerun()
+# with toggle_col:
+#     toggle_label = "☾ Dark" if st.session_state.theme == "light" else "☀ Light"
+#     if st.button(toggle_label, key="theme_toggle_btn", help="Switch theme"):
+#         _toggle_theme()
+#         st.rerun()
 
 
 # ── Hero ─────────────────────────────────────────────────────────────────────
@@ -350,7 +350,7 @@ col_input, col_pipeline = st.columns([1, 1.05], gap="medium")
 
 with col_input:
     st.html('<div class="input-card">')
-    topic = st.text_input(
+    topic = st.text_area(
         "Research Topic",
         placeholder="e.g. The future of Thermal energy",
         key="topic_input",
@@ -365,7 +365,7 @@ with col_input:
     _render_search_log()
 
 with col_pipeline:
-    st.html('<div class="section-heading">Live Pipeline</div>')
+    st.html('<div class="section-heading">Execution Pipeline</div>')
     _render_stepper()
 
 
